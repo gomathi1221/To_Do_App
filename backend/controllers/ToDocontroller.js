@@ -24,10 +24,14 @@ module.exports.updateToDo = async (req, res) => {
     .catch((err) => console.log(err));
 };
 
-module.exports.deleteToDo=async(req,res)=>{
-    const {_id}=req.body
-    ToDoModel
-    .findByIdAndUpdate(_id)
-    .then(()=>res.send("deleted successfully...."))
-    .catch((err)=> console.log(err))
-}
+module.exports.deleteToDo = async (req, res) => {
+  const { _id } = req.body;
+  console.log("Trying to delete ID:", _id); // 👀 check this
+  ToDoModel
+    .findByIdAndDelete(_id)
+    .then(() => res.send("Deleted successfully"))
+    .catch((err) => {
+      console.error("Delete Error:", err);
+      res.status(500).send("Delete failed");
+    });
+};
